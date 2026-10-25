@@ -1,0 +1,938 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Founder’s Compass</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  /* Layout: press-book editorial. Short masthead with a live compass dial, sticky tab bar, then content
+     hung off a narrow left margin of mono labels. Hairlines instead of boxes; cards only where data lives. */
+  --bg:#0b1113; --bg-2:#0f1719; --surface:#131c1f; --surface-2:#1a262a; --line:#2a393e; --line-soft:#1d2a2e;
+  --fg:#ece8dc; --fg-2:#abb5b1; --fg-3:#7e8e8c;
+  --accent:#ea6a97; --accent-ink:#1d0812; --accent-soft:#2f1621;
+  --good:#79c9a6; --good-soft:#13261e; --warn:#e0a84f; --warn-soft:#2b2111; --bad:#ee8368; --bad-soft:#2e1814;
+  --f-display:'Instrument Serif','Iowan Old Style','Palatino Linotype',Georgia,serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-prose:'Newsreader','Iowan Old Style',Georgia,serif;
+  --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --barh:60px;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#eef1ec; --bg-2:#e6ebe6; --surface:#fbfcfa; --surface-2:#f0f4ef; --line:#c4cfc8; --line-soft:#d9e1db;
+  --fg:#12201f; --fg-2:#41524f; --fg-3:#5c6c69;
+  --accent:#b52b63; --accent-ink:#ffffff; --accent-soft:#f6dde7;
+  --good:#1f7a57; --good-soft:#d8eee4; --warn:#85560c; --warn-soft:#f5e8cc; --bad:#b23c27; --bad-soft:#f7dcd5;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono)}
+.eyebrow,.lab{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);margin:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1,h2,h3,h4,h5{margin:0;font-weight:400}
+p{margin:0}
+
+/* header */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;gap:20px;min-height:56px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:1.35rem;white-space:nowrap}
+.brand svg{width:22px;height:22px;flex:none}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:12px;min-width:0}
+.tabs::-webkit-scrollbar{display:none}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:17px 14px 15px;color:var(--fg-2);font-weight:500;font-size:.93rem;white-space:nowrap}
+.tab:hover{color:var(--fg)}
+.tab[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.tools{margin-left:auto;display:flex;align-items:center;gap:14px}
+.mini{font-family:var(--f-mono);font-size:.78rem;color:var(--fg-2)}
+.btn{background:transparent;border:1px solid var(--line);border-radius:4px;padding:7px 12px;font-size:.85rem;font-weight:500;color:var(--fg)}
+.btn:hover{border-color:var(--fg-3)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+@media (max-width:760px){.tabs{order:3;flex-basis:100%;margin:0 -4px}.tab{padding:10px 12px 11px}.bar-in{gap:0 14px}}
+
+/* masthead */
+.masthead{border-bottom:1px solid var(--line)}
+.mast{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:48px;align-items:center;padding-block:clamp(28px,5vw,64px)}
+.mast h1{font-family:var(--f-display);font-size:clamp(2.5rem,1.2rem + 5vw,4.8rem);line-height:1.02;letter-spacing:-.01em;text-wrap:balance;margin-top:14px}
+.mast h1 em{color:var(--accent)}
+.lede{font-family:var(--f-prose);font-size:1.12rem;color:var(--fg-2);max-width:56ch;margin-top:20px}
+.next{margin-top:26px;border:1px solid var(--line);background:var(--surface);padding:14px 16px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:620px}
+.next p{margin-top:4px;min-width:0;flex:1 1 240px}
+.dial{justify-self:center;width:100%;max-width:330px}
+.dial svg{display:block;width:100%;height:auto}
+.dial .tick{stroke:var(--line);stroke-width:1}
+.dial .tick.long{stroke:var(--fg-3)}
+.dial .track{fill:none;stroke:var(--line-soft);stroke-width:10}
+.dial .fill{fill:none;stroke:var(--accent);stroke-width:10}
+.dial .num{font-family:var(--f-mono);font-size:13px;fill:var(--fg-2)}
+.dial .north{font-family:var(--f-mono);font-size:12px;fill:var(--accent)}
+.dial #needle{transform-origin:180px 180px;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.readout{display:flex;justify-content:center;align-items:baseline;gap:12px;margin-top:6px;font-family:var(--f-mono);font-size:.78rem;color:var(--fg-2);flex-wrap:wrap}
+.readout b{font-size:1.5rem;font-weight:500;color:var(--fg)}
+@media (max-width:900px){.mast{grid-template-columns:minmax(0,1fr);gap:28px}.dial{max-width:250px;justify-self:start}}
+
+/* panels */
+.panel{padding-block:44px 90px}
+.panel.enter{animation:rise .32s ease both}
+@keyframes rise{from{opacity:.35;transform:translateY(8px)}to{opacity:1;transform:none}}
+.phead{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px 40px;margin-bottom:34px}
+.phead h2{font-family:var(--f-display);font-size:clamp(2rem,1.3rem + 2.6vw,3.2rem);line-height:1.05;text-wrap:balance}
+.phead .intro{font-family:var(--f-prose);font-size:1.08rem;color:var(--fg-2);max-width:62ch;margin-top:12px}
+@media (max-width:820px){.phead{grid-template-columns:minmax(0,1fr);gap:10px}}
+.bar-track{height:6px;background:var(--line-soft);border-radius:99px;overflow:hidden}
+.bar-track i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s ease}
+.bar-track.big{height:8px}
+
+/* roadmap */
+.stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line)}
+.sc{text-align:left;background:none;border:0;border-top:2px solid transparent;margin-top:-1px;padding:16px 16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0;border-right:1px solid var(--line-soft)}
+.sc:last-child{border-right:0}
+.sc:hover{background:var(--bg-2)}
+.sc[aria-pressed="true"]{border-top-color:var(--accent);background:var(--surface)}
+.sc .t{font-family:var(--f-display);font-size:1.3rem;line-height:1.1}
+.sc .m{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3)}
+@media (max-width:760px){.stages{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x proximity}.sc{scroll-snap-align:start}}
+.sd{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;padding-top:44px}
+@media (max-width:900px){.sd{grid-template-columns:minmax(0,1fr);gap:32px}}
+.sd-side{align-self:start;position:sticky;top:calc(var(--barh) + 24px)}
+@media (max-width:900px){.sd-side{position:static}}
+.sd-side h3{font-family:var(--f-display);font-size:clamp(2rem,1.4rem + 2vw,2.9rem);line-height:1.05;margin-top:10px;text-wrap:balance}
+.q{font-family:var(--f-display);font-style:italic;font-size:1.4rem;color:var(--accent);margin-top:12px;line-height:1.25}
+.prose{font-family:var(--f-prose);font-size:1.07rem;color:var(--fg-2);margin-top:16px;max-width:58ch}
+.gate{margin-top:24px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.gate p.g{margin-top:8px}
+.gate-state{margin-top:10px;font-family:var(--f-mono);font-size:.78rem;color:var(--fg-3)}
+.gate-state.pass{color:var(--good)}
+.note{margin-top:24px}
+.note label{display:block;font-size:.85rem;font-weight:500;color:var(--fg-2);margin-bottom:6px}
+textarea,input[type=text],input[type=number],select{width:100%;background:var(--bg-2);border:1px solid var(--line);border-radius:4px;padding:10px 12px;line-height:1.45}
+textarea{resize:vertical;min-height:84px}
+textarea:focus,input:focus,select:focus{border-color:var(--accent);outline:none}
+.sd-prog{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sd-prog .bar-track{flex:1}
+.sd-prog span{font-family:var(--f-mono);font-size:.78rem;color:var(--fg-2);white-space:nowrap}
+.checks{list-style:none;margin:0;padding:0}
+.chk{display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;padding:18px 0;border-top:1px solid var(--line-soft)}
+.chk input{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:2px 0 0;border:1.5px solid var(--fg-3);border-radius:3px;background:transparent;position:relative;cursor:pointer;padding:0}
+.chk input:checked{background:var(--accent);border-color:var(--accent)}
+.chk input:checked::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.chk label{display:flex;flex-direction:column;gap:5px;cursor:pointer;min-width:0}
+.chk-t{font-weight:600;font-size:1.04rem}
+.chk-d{color:var(--fg-2);font-size:.96rem}
+.chk-w{font-size:.82rem;color:var(--fg-3)}
+.chk-w i{font-family:var(--f-mono);font-style:normal;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;margin-right:6px;color:var(--fg-3)}
+.chk input:checked + label .chk-t{color:var(--fg-3);text-decoration:line-through;text-decoration-color:var(--line)}
+.chk.flash{animation:flash 1.4s ease}
+@keyframes flash{0%,60%{background:var(--accent-soft)}100%{background:transparent}}
+.sd-nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:20px}
+
+/* journeys */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px}
+.chip{background:none;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.86rem;color:var(--fg-2)}
+.chip:hover{border-color:var(--fg-3);color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.chip small{font-family:var(--f-mono);margin-left:6px;opacity:.7}
+.jl{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:48px}
+@media (max-width:900px){.jl{grid-template-columns:minmax(0,1fr);gap:28px}}
+.jlist{display:flex;flex-direction:column;align-self:start;border-top:1px solid var(--line)}
+@media (min-width:901px){.jlist{position:sticky;top:calc(var(--barh) + 24px)}}
+.jitem{text-align:left;background:none;border:0;border-bottom:1px solid var(--line-soft);padding:14px 12px;display:flex;flex-direction:column;gap:3px}
+.jitem:hover{background:var(--bg-2)}
+.jitem[aria-pressed="true"]{background:var(--surface)}
+.jitem .n{font-family:var(--f-display);font-size:1.35rem;line-height:1.1}
+.jitem .c{font-size:.84rem;color:var(--fg-3)}
+.jitem .read{color:var(--good);font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em}
+.dos h3{font-family:var(--f-display);font-size:clamp(2.2rem,1.4rem + 3vw,3.6rem);line-height:1.02;text-wrap:balance}
+.dos .meta{font-family:var(--f-mono);font-size:.78rem;color:var(--fg-2);margin-top:12px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.tag{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);padding:3px 8px;border-radius:3px;color:var(--fg-2)}
+.dos .line{font-family:var(--f-prose);font-size:1.25rem;line-height:1.45;margin-top:22px;max-width:60ch}
+.dsec{margin-top:40px}
+.dsec>.lab{padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.dsec p.p{font-family:var(--f-prose);font-size:1.07rem;color:var(--fg-2);max-width:62ch;margin-top:12px}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.tl .y{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);padding-top:3px}
+.ul{margin:8px 0 0;padding:0;list-style:none}
+.ul li{padding:10px 0 10px 18px;border-bottom:1px solid var(--line-soft);position:relative;color:var(--fg-2)}
+.ul li::before{content:"";position:absolute;left:0;top:19px;width:7px;height:1.5px;background:var(--fg-3)}
+.decision{margin-top:40px;padding:26px 0;border-top:1px solid var(--accent);border-bottom:1px solid var(--line)}
+.decision h4{font-family:var(--f-display);font-size:1.7rem;line-height:1.15;margin-top:10px;text-wrap:balance}
+.decision p.p{font-family:var(--f-prose);font-size:1.12rem;color:var(--fg-2);margin-top:12px;max-width:62ch}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:14px}
+.metric{border:1px solid var(--line);background:var(--surface);padding:16px}
+.metric b{display:block;font-family:var(--f-display);font-weight:400;font-size:2.2rem;line-height:1}
+.metric span{display:block;margin-top:8px;font-size:.84rem;color:var(--fg-2)}
+.steal{margin-top:34px;background:var(--surface-2);padding:18px 20px}
+.steal p.p{margin-top:8px;font-size:1.02rem}
+.readbox{display:flex;align-items:center;gap:10px;margin-top:26px;font-size:.92rem;color:var(--fg-2)}
+.readbox input{width:18px;height:18px;accent-color:var(--accent)}
+
+/* curriculum */
+.seg{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:4px;width:fit-content;max-width:100%;overflow:hidden;margin-bottom:30px}
+.seg button{background:none;border:0;border-right:1px solid var(--line);padding:10px 16px;font-weight:500;font-size:.92rem;color:var(--fg-2)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.seg small{font-family:var(--f-mono);margin-left:8px;opacity:.7;font-size:.72rem}
+.cat-h{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px;align-items:end;margin-bottom:10px}
+.cat-h h3{font-family:var(--f-display);font-size:clamp(1.8rem,1.3rem + 2vw,2.6rem);line-height:1.05}
+.cat-h p{font-family:var(--f-prose);font-size:1.07rem;color:var(--fg-2);margin-top:8px;max-width:60ch}
+@media (max-width:700px){.cat-h{grid-template-columns:minmax(0,1fr)}}
+.pair{padding:30px 0;border-top:1px solid var(--line)}
+.pair h4{font-family:var(--f-display);font-size:1.6rem;line-height:1.1;margin-bottom:16px}
+.vs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.vs{grid-template-columns:minmax(0,1fr)}}
+.vs>div{padding:18px 20px;min-width:0}
+.vs .dont{background:var(--warn-soft)}
+.vs .do{background:var(--good-soft)}
+.vs .k{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.vs .dont .k{color:var(--warn)}
+.vs .do .k{color:var(--good)}
+.vs svg{width:14px;height:14px}
+.vs p.t{margin-top:10px;font-size:1.05rem}
+.why{font-family:var(--f-prose);color:var(--fg-2);font-size:1.04rem;margin-top:14px;max-width:70ch}
+.try{display:flex;gap:12px;align-items:flex-start;margin-top:14px;font-size:.95rem;cursor:pointer}
+.try input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent);flex:none}
+.try b{font-weight:600}
+
+/* toolkit */
+.tk-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:30px}
+.tk-top .seg{margin-bottom:0}
+.cursel{display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--fg-2)}
+.cursel select{width:auto;padding:7px 10px}
+.calc{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:48px}
+@media (max-width:900px){.calc{grid-template-columns:minmax(0,1fr);gap:30px}}
+.calc h3{font-family:var(--f-display);font-size:2rem;line-height:1.05}
+.calc .sub{font-family:var(--f-prose);color:var(--fg-2);font-size:1.04rem;margin:10px 0 22px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.88rem;font-weight:500;margin-bottom:6px}
+.field .hint{font-size:.8rem;color:var(--fg-3);margin-top:5px}
+.inp{display:flex;align-items:stretch}
+.inp input{border-radius:4px;font-variant-numeric:tabular-nums}
+.inp .pre,.inp .suf{display:flex;align-items:center;padding:0 10px;font-family:var(--f-mono);font-size:.85rem;color:var(--fg-2);background:var(--surface-2);border:1px solid var(--line)}
+.inp .pre{border-right:0;border-radius:4px 0 0 4px}
+.inp .suf{border-left:0;border-radius:0 4px 4px 0}
+.inp .pre + input{border-radius:0 4px 4px 0}
+.inp input:has(+ .suf){border-radius:4px 0 0 4px}
+.ex{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{border:1px solid var(--line);background:var(--surface);padding:16px;min-width:0}
+.tile b{display:block;font-family:var(--f-display);font-weight:400;font-size:2rem;line-height:1.05;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.tile span{display:block;margin-top:6px;font-size:.82rem;color:var(--fg-2)}
+.tile .l{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin:0 0 8px}
+.verdict{margin-top:14px;padding:14px 16px;font-size:.98rem}
+.verdict[data-tone="good"]{background:var(--good-soft);color:var(--good)}
+.verdict[data-tone="warn"]{background:var(--warn-soft);color:var(--warn)}
+.verdict[data-tone="bad"]{background:var(--bad-soft);color:var(--bad)}
+.verdict b{font-weight:600}
+.chart{margin-top:22px;border:1px solid var(--line);background:var(--surface);padding:14px 14px 6px}
+.chart h5{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:6px}
+.chart svg{display:block;width:100%;height:auto}
+.chart .grid{stroke:var(--line-soft);stroke-width:1}
+.chart .zero{stroke:var(--fg-3);stroke-width:1}
+.chart .ax{font-family:var(--f-mono);font-size:11px;fill:var(--fg-3)}
+.chart .ln{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linejoin:round}
+.chart .ar{fill:var(--accent-soft)}
+.chart .dot{fill:var(--accent)}
+.chart .mk-bad{stroke:var(--bad);stroke-dasharray:4 4}
+.chart .mk-good{stroke:var(--good);stroke-dasharray:4 4}
+.chart .lb-bad{font-family:var(--f-mono);font-size:11px;fill:var(--bad)}
+.chart .lb-good{font-family:var(--f-mono);font-size:11px;fill:var(--good)}
+.chart .tbl{margin:0}
+.bars{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.bars .row{display:grid;grid-template-columns:150px minmax(0,1fr) 90px;gap:12px;align-items:center;font-size:.9rem}
+.bars .row span:last-child{text-align:right;font-family:var(--f-mono);font-size:.78rem;color:var(--fg-2)}
+@media (max-width:520px){.bars .row{grid-template-columns:110px minmax(0,1fr) 70px}}
+.tbl-wrap{overflow-x:auto;margin-top:22px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);font-weight:500}
+tr:last-child td{border-bottom:0}
+
+/* deck */
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:26px}
+.sl-btn{width:44px;height:44px;border:1px solid var(--line);background:none;border-radius:4px;font-family:var(--f-mono);font-size:.82rem;color:var(--fg-2);position:relative}
+.sl-btn:hover{border-color:var(--fg-3)}
+.sl-btn.filled::after{content:"";position:absolute;left:8px;right:8px;bottom:5px;height:2px;background:var(--accent);border-radius:2px}
+.sl-btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.sl-btn[aria-pressed="true"].filled::after{background:var(--accent-ink)}
+.deck{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:start}
+@media (max-width:900px){.deck{grid-template-columns:minmax(0,1fr);gap:30px}}
+.guide h3{font-family:var(--f-display);font-size:2rem;line-height:1.05;margin-top:8px}
+.guide .job{font-family:var(--f-display);font-style:italic;font-size:1.3rem;color:var(--accent);margin-top:10px;line-height:1.25}
+.guide h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);margin:22px 0 6px;font-weight:400}
+.guide li,.guide p.a{color:var(--fg-2);font-size:.97rem}
+.guide ul{margin:0;padding-left:18px}
+details{margin-top:22px;border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;font-weight:500;font-size:.92rem}
+.exb{margin-top:10px;font-size:.92rem;background:var(--surface-2);padding:14px 16px}
+.exb b{display:block;font-family:var(--f-prose);font-size:1.1rem;font-weight:500;margin-bottom:6px}
+.exb div{white-space:pre-line;color:var(--fg-2)}
+.exb .btn{margin-top:12px}
+.edit{position:sticky;top:calc(var(--barh) + 20px)}
+@media (max-width:900px){.edit{position:static}}
+.edit label{display:block;font-size:.88rem;font-weight:500;margin:0 0 6px}
+.edit label span{font-weight:400;color:var(--fg-3);margin-left:6px;font-size:.8rem}
+.meter{display:flex;align-items:center;gap:12px;margin:12px 0 18px;font-family:var(--f-mono);font-size:.76rem;color:var(--fg-2)}
+.meter .bar-track{flex:1}
+.meter.over i{background:var(--warn)}
+.slide{container-type:inline-size;aspect-ratio:16/9;max-width:100%;background:var(--surface-2);border:1px solid var(--line);padding:6cqw 7cqw;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.slide .sl-k{font-family:var(--f-mono);font-size:max(9px,1.9cqw);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.slide .sl-h{font-family:var(--f-display);font-size:max(15px,5.6cqw);line-height:1.05;margin-top:3cqw;text-wrap:balance}
+.slide ul{margin:3cqw 0 0;padding-left:3.4cqw;font-size:max(10px,2.6cqw);color:var(--fg-2);line-height:1.4}
+.slide li{margin-bottom:1cqw}
+.slide .sl-n{position:absolute;right:4cqw;bottom:3cqw;font-family:var(--f-mono);font-size:max(9px,1.8cqw);color:var(--fg-3)}
+.slide .ph{color:var(--fg-3)}
+.dk-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.dk-actions .mini{margin-left:auto}
+.outline{margin-top:10px}
+.outline textarea{min-height:140px;font-family:var(--f-mono);font-size:.78rem}
+
+/* footer, toast */
+.foot{border-top:1px solid var(--line);padding-block:34px 60px;color:var(--fg-3);font-size:.86rem}
+.foot p{max-width:78ch;margin-bottom:14px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:4px;font-size:.88rem;z-index:40;max-width:calc(100% - 32px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.panel.enter,.chk.flash{animation:none}.bar-track i,.dial #needle{transition:none}}
+</style>
+
+<header class="bar" id="top">
+  <div class="wrap bar-in">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M12 3.5l2.6 8.5H9.4z" fill="var(--accent)"/><path d="M12 20.5l-2.6-8.5h5.2z" fill="var(--fg-3)"/></svg>
+      <span>The Founder’s Compass</span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" id="tab-roadmap" data-tab="roadmap" aria-controls="panel-roadmap">Roadmap</button>
+      <button class="tab" role="tab" id="tab-journeys" data-tab="journeys" aria-controls="panel-journeys">Founder journeys</button>
+      <button class="tab" role="tab" id="tab-curriculum" data-tab="curriculum" aria-controls="panel-curriculum">Curriculum</button>
+      <button class="tab" role="tab" id="tab-toolkit" data-tab="toolkit" aria-controls="panel-toolkit">Toolkit</button>
+    </nav>
+    <div class="tools">
+      <span class="mini" id="miniPct" title="Roadmap progress">0%</span>
+      <button class="btn" id="themeBtn" data-act="theme" aria-label="Switch theme">Light</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="masthead">
+    <div class="wrap mast">
+      <div>
+        <p class="eyebrow">A field guide for first-time founders</p>
+        <h1>The expensive part of a startup is the months you spend <em>guessing</em>.</h1>
+        <p class="lede">Five stages from zero to launch, seven founders’ real timelines, a curriculum of do’s and don’ts, three calculators and a ten-slide pitch deck builder. Everything you tick or type is saved in this browser.</p>
+        <div class="next" id="nextMove"></div>
+      </div>
+      <div class="dial" id="dial"></div>
+    </div>
+  </section>
+
+  <div class="wrap" id="panels">
+    <section class="panel" id="panel-roadmap" role="tabpanel" aria-labelledby="tab-roadmap" hidden></section>
+    <section class="panel" id="panel-journeys" role="tabpanel" aria-labelledby="tab-journeys" hidden></section>
+    <section class="panel" id="panel-curriculum" role="tabpanel" aria-labelledby="tab-curriculum" hidden></section>
+    <section class="panel" id="panel-toolkit" role="tabpanel" aria-labelledby="tab-toolkit" hidden></section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>The Founder’s Compass is educational. Nothing here is legal, tax or investment advice. Talk to a qualified professional before you incorporate, issue equity or raise money. Founder stories are compiled from public reporting and interviews, rounded, and may be out of date. Check primary sources before you quote a number.</p>
+    <p>Your progress, notes and calculator inputs are stored only in this browser. Clearing site data removes them.</p>
+    <button class="btn" id="resetBtn" data-act="reset">Erase all progress</button>
+  </div>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- DATA ---------- */
+var STAGES=[
+{id:1,name:'Mindset & Preparation',short:'Mindset',weeks:'Weeks 0–4',question:'Can you afford to be wrong for a year?',
+ essay:'Most first-time founders prepare by reading. The ones who last prepare by doing arithmetic. Before you validate anything, you need to know how long you can keep going, who will tell you the truth, and when you will stop. A startup you cannot afford to lose pushes you into bad decisions: you stay too long on a dead idea and sell too early on a live one.',
+ gate:'You can say in one sentence what you are risking, for how long, and when you will check.',
+ items:[
+ {t:'Write down your personal runway',d:'Savings divided by the monthly cost of your actual life: rent, loan payments, insurance, and one bad surprise. Use the life you have, not the one you would like.',w:'One number, in months, that your partner or family has seen.'},
+ {t:'Set a kill date',d:'Pick a calendar date six months out where you review the evidence and decide: continue, change course, or stop. Write the criteria today, while you are calm.',w:'The date is in your calendar with three written criteria.'},
+ {t:'Name the problem you would work on for ten years',d:'Write the problem, not the product. If the idea fell apart tomorrow, would you still care about this problem?',w:'Two sentences written, including why you in particular.'},
+ {t:'Ask three skeptics to argue against you',d:'Pick people who will say no to your face. Write their objections down word for word and do not reply.',w:'Three objections on one page, none rebutted.'},
+ {t:'Reserve ten hours a week',d:'Find ten hours that survive a bad week, block them, and tell people you are unavailable.',w:'Ten hours are blocked for the next four weeks.'},
+ {t:'Map your skill gaps',d:'Score yourself 1 to 5 on building, selling and operations. The lowest score is your first thing to learn or your first hire.',w:'Three scores and one named gap with a plan.'},
+ {t:'Set up the plumbing',d:'A separate bank account, a shared folder, and a one-page decision log where you write what you decided and why.',w:'The account exists and the first decision is logged.'}]},
+{id:2,name:'Idea Validation & User Interviews',short:'Validation',weeks:'Weeks 3–10',question:'Is anyone already trying to solve this?',
+ essay:'An idea is a guess about other people’s behaviour. Interviews are how you check that guess without a product. People lie about the future to be kind, but they rarely lie about the past. Ask what they did last time, what it cost them, and what they tried. Compliments are not data. Money, time and introductions are.',
+ gate:'Three people have committed money, time or reputation, and you can name the workaround they would replace.',
+ items:[
+ {t:'Write the problem hypothesis',d:'[Specific person] struggles with [specific task] because [cause], and it costs them [time or money]. If you cannot fill all four slots you do not have a hypothesis yet.',w:'One sentence with all four slots filled.'},
+ {t:'List thirty named people',d:'Names, not segments. Where do they spend time and who do you know who knows them? Cold is fine. Vague is not.',w:'30 rows, each with a name and a way to reach them.'},
+ {t:'Book fifteen conversations',d:'Twenty-minute calls. Most people ignore the first message, so send a second one. Offer something small in return only if you need to.',w:'15 calls are on the calendar.'},
+ {t:'Ask about the last time, not the next time',d:'Open with “Tell me about the last time you dealt with this.” Leave your idea out until the final minutes, or out entirely.',w:'An interview script exists and never mentions your solution.'},
+ {t:'Find the workaround',d:'What do they use today: a spreadsheet, an intern, a competitor, nothing? The workaround is your real competitor and shows what the problem is worth.',w:'Each interview has a workaround and its cost in your notes.'},
+ {t:'Ask for a commitment',d:'End with a request that costs them something: a paid pilot, a pre-order, an introduction to their boss, a second meeting with their team.',w:'You made the ask in every interview and logged the answer.'},
+ {t:'Write the one-page memo',d:'What you learned, what surprised you, what you still doubt, and a verdict: continue, change or stop. Send it to one skeptic.',w:'Memo written with a verdict.'}]},
+{id:3,name:'Skill Acquisition',short:'Skills',weeks:'Weeks 8–20',question:'Can you make money on one customer, by hand?',
+ essay:'Three skills decide whether early survival is possible: knowing your unit economics, selling without a team, and building the thinnest version of the product. You do not need to master them. You need enough to run the loop once: sell something, deliver it, and count what it cost you.',
+ gate:'A stranger paid and got the result without you on the call.',
+ items:[
+ {t:'Build a one-sheet unit economics model',d:'Price, direct cost per customer, gross margin, a guess at acquisition cost, payback period. Use the CAC:LTV calculator and replace guesses as real numbers arrive.',w:'Every cell is filled, guesses labelled as guesses.'},
+ {t:'Sell by hand to twenty prospects',d:'Calls or messages you write yourself. Track replies, objections and the exact words people use. You cannot delegate this until you have done it.',w:'20 conversations logged with the objection from each.'},
+ {t:'Close three customers manually',d:'Deliver the result with spreadsheets, email and your own hours. This is a concierge service. It is supposed to feel unscalable.',w:'Three customers have paid and received the outcome.'},
+ {t:'Prototype the thinnest slice',d:'One workflow end to end in four weeks or fewer. Software: a clickable prototype or no-code tool. Hardware: a printed enclosure on a dev board. Physical goods: ten units made by hand.',w:'Someone outside your circle completes the job with it.'},
+ {t:'Test two prices',d:'Quote two prices to different prospects. If nobody pushes back, you are too low. Write down what people say when they hear the number.',w:'Two prices quoted to at least four prospects each.'},
+ {t:'Choose one weekly metric',d:'The number that tells you customers get value: activations, repeat orders, weekly active teams. Review it every Monday.',w:'Metric defined and baseline recorded.'},
+ {t:'Tear down three competitors',d:'Sign up, buy or order from each. Note the pricing page, the onboarding and the first thing they ask for. Borrow the structure, not the copy.',w:'Three one-paragraph teardowns saved.'}]},
+{id:4,name:'Go-to-Market Execution',short:'Go-to-market',weeks:'Weeks 16–36',question:'Can you repeat it?',
+ essay:'The first ten customers are a favour economy. Customer thirty is a channel. Pick one channel, run it long enough to learn, and measure the funnel weekly. Resist being everywhere. A channel that works at small scale will show you. A channel you abandoned after two weeks shows you nothing.',
+ gate:'One channel brings in customers three weeks running without heroics, with payback under twelve months.',
+ items:[
+ {t:'Define your ideal customer in five attributes',d:'Role, company size or household type, trigger event, budget owner, and where they look for solutions. The trigger event (“just hired their first accountant”) is the most useful.',w:'Five attributes written and one trigger event named.'},
+ {t:'Pick one channel for six weeks',d:'Outbound, content, partnerships, marketplaces, communities or retail. Choose where your customers already are and where you have some edge. Judge it only after six weeks.',w:'Channel chosen and six weeks blocked on the calendar.'},
+ {t:'Build the weekly funnel sheet',d:'Leads, conversations, trials or samples, paid. Update it every Monday. The point is to see where people drop, not to look good.',w:'Sheet created with this week’s row filled in.'},
+ {t:'Write the before-and-after page',d:'One page: the painful before, the specific after, one number, one call to action. Show it to five people for five seconds and ask what it does.',w:'Five people described it correctly.'},
+ {t:'Cut time to first value',d:'Measure how long it takes from signup or purchase to the moment the customer gets what they came for. Remove one step each week.',w:'Baseline measured and one step removed.'},
+ {t:'Collect three testimonials with numbers',d:'Ask what changed, by how much, and how fast. “Saves six hours a week” beats “great product”.',w:'Three quotes with a number and permission to use them.'},
+ {t:'Check retention on your first cohort',d:'Pull week-four retention or the repeat order rate for the first group. If it is flat, fix the product before buying more traffic.',w:'Retention figure written next to the cohort size.'},
+ {t:'Run a Monday numbers review',d:'Thirty minutes: last week’s funnel, one experiment for this week, one thing to stop doing.',w:'First review held and the next three scheduled.'}]},
+{id:5,name:'Funding & Legal Basics',short:'Funding & legal',weeks:'Start week 12, finish by month 9',question:'Do you need outside money, and is your house in order if you take it?',
+ essay:'Raising money buys time and speed. It is not a milestone. It only makes sense when you have a repeatable way to turn money into growth. Legal housekeeping is cheap when done early and expensive when done in a hurry. Do the paperwork before the first cheque, not after. This is general education, not legal advice.',
+ gate:'A signed founder agreement, a clean cap table and monthly closed books, all before any money moves.',
+ items:[
+ {t:'Decide whether you need to raise',d:'Use the runway calculator. How many months to profitability at your current growth? If you are default alive you may not need outside money. If you are not, work out what a raise would change.',w:'A written yes or no with the calculation behind it.'},
+ {t:'Choose the entity with counsel',d:'A Delaware C-corp is the usual route for US venture investors. Elsewhere a private limited company is common (in India, a Private Limited company). Get a lawyer’s view for your situation.',w:'Entity chosen after one conversation with a lawyer.'},
+ {t:'Sign a founder agreement',d:'Equity split, four-year vesting with a one-year cliff, IP assignment, roles, and what happens when someone leaves. Do it before there is value to fight over.',w:'Signed by every founder.'},
+ {t:'File founder paperwork on time',d:'In the US, founders who receive restricted stock usually file an 83(b) election within 30 days of the grant, and the deadline cannot be extended. Ask your lawyer if it applies.',w:'Filed, or confirmed in writing that it does not apply.'},
+ {t:'Keep a simple cap table',d:'One sheet: who owns what, the option pool, and how a SAFE converts. Know what a 20% raise does to your stake before you meet an investor.',w:'Cap table with one post-raise scenario.'},
+ {t:'Open the books',d:'Separate bank account, bookkeeping software, receipts in a folder, a monthly close. Investors, banks and tax authorities will all ask.',w:'Last month is closed.'},
+ {t:'Build an investor pipeline like a sales pipeline',d:'Forty names, a warm path to each, a stage column, a follow-up date. Fundraising is a sales process with a deadline.',w:'40 names listed with a warm path to at least 10.'},
+ {t:'Know the alternatives',d:'Customer prepayment, grants, revenue-based financing, angels, accelerators. Each costs something different: equity, interest, speed or control.',w:'One paragraph on each option and what it costs.'},
+ {t:'Assemble the data room',d:'One-pager, deck, metrics, cap table, incorporation documents, customer references.',w:'Folder shared with one trusted reader.'}]}
+];
+
+var CASES=[
+{id:'mailchimp',name:'Ben Chestnut',co:'Mailchimp',years:'1999 to 2021',tags:['Bootstrapped','SaaS','Pivot'],
+ line:'A web design agency built email software to smooth its own cash flow, then sold it for about $12 billion without raising venture money.',
+ setup:'Chestnut ran The Rocket Science Group, a web design agency in Atlanta. Project revenue was lumpy, and after the dot-com crash it was worse. The email tool the agency built for its own clients earned small monthly fees, and it kept growing.',
+ timeline:[{y:'1999',e:'Chestnut starts The Rocket Science Group, a web design agency, with Mark Armstrong.'},{y:'2001',e:'Mailchimp launches as a side tool for agency clients.'},{y:'2007',e:'Client work is wound down. The company bets everything on Mailchimp.'},{y:'2009',e:'Freemium launches. Reported growth: about 85,000 to 450,000 users in roughly a year.'},{y:'2020',e:'Revenue around $800 million, with no outside investors.'},{y:'2021',e:'Intuit agrees to acquire Mailchimp for about $12 billion.'}],
+ struggles:['For about six years the product was a side project of a services business.','Agency income was unpredictable, and the product made little money at first.','Staying private meant growing only as fast as revenue allowed.'],
+ decision:{h:'Stop the agency. Then give the product away up to a limit.',p:'In 2007 the founders stopped client work, giving up the revenue that paid the bills to bet on a tool earning small monthly fees. In 2009 they made the product free up to a size limit and charged as lists grew. The free tier cost money up front. Conversions from a much larger base more than made up for it.'},
+ metrics:[{v:'~$12B',l:'Intuit acquisition, 2021'},{v:'85k to 450k',l:'Users in about a year after freemium (reported)'},{v:'$0',l:'Venture capital raised'},{v:'20 years',l:'From launch to sale'}],
+ lessons:['A side project with recurring revenue can outgrow the main business.','Pricing can be a growth channel, not only a way to earn.','Slower growth bought control over every decision.'],
+ steal:'List the repeat needs your project customers keep asking for. Pick one that could be a monthly product.'},
+{id:'airbnb',name:'Brian Chesky, Joe Gebbia and Nathan Blecharczyk',co:'Airbnb',years:'2007 to 2020',tags:['Venture-Backed','Marketplace'],
+ line:'Two designers who could not make rent hosted strangers on air mattresses, then flew to New York to photograph listings themselves.',
+ setup:'In 2007 Chesky and Gebbia could not pay rent in San Francisco. A design conference had filled the city’s hotels, so they put air mattresses on the floor, charged for a bed and breakfast, and hosted three guests. Blecharczyk, an engineer, joined to build the site.',
+ timeline:[{y:'2007',e:'First guests during a design conference in San Francisco.'},{y:'2008',e:'Launch at SXSW brings very few bookings. Election-themed cereal boxes raise around $30,000.'},{y:'2009',e:'Y Combinator, Winter 2009. A New York trip to photograph listings reportedly doubles weekly revenue from about $200 to $400.'},{y:'2009',e:'Seed funding of roughly $600,000, led by Sequoia (reported).'},{y:'2020',e:'IPO in December.'}],
+ struggles:['Strangers sleeping in strangers’ homes sounded unsafe, and investors said so.','Listings carried dark, low-quality photos that hid the product.','The founders financed early months on credit cards (widely reported).'],
+ decision:{h:'Stop coding. Go and sit in the customers’ homes.',p:'The cereal boxes bought runway but were not a business. The real move came after Y Combinator, when partners pushed them to meet customers in person. They flew to New York, stayed with hosts, and photographed the listings with a rented camera. Weekly revenue reportedly doubled. The lesson was the unscalable work of looking at the product the way a guest would.'},
+ metrics:[{v:'$200 to $400',l:'Weekly revenue before and after the photo trip (reported)'},{v:'~$30k',l:'Raised by selling cereal boxes'},{v:'W09',l:'Y Combinator batch'},{v:'2020',l:'IPO'}],
+ lessons:['Go and sit with users. A dashboard cannot tell you why.','Fix the first-impression asset before building features.','A funding stunt buys time. It does not prove demand.'],
+ steal:'Pick your ten lowest-converting customers and spend a day with each of them.'},
+{id:'spanx',name:'Sara Blakely',co:'Spanx',years:'1998 to 2021',tags:['Bootstrapped','Solo Founder','Consumer product'],
+ line:'A fax machine saleswoman with $5,000 in savings built a hosiery brand and kept full ownership for over two decades.',
+ setup:'In 1998 Blakely was selling fax machines door to door. She cut the feet off a pair of control-top pantyhose to wear under white trousers and saw a product. She kept her day job to pay rent while she worked out how to make it.',
+ timeline:[{y:'1998',e:'Idea, with about $5,000 in savings.'},{y:'1998 to 2000',e:'Hosiery mills turn her down until one agrees to make prototypes.'},{y:'2000',e:'A Neiman Marcus buyer places an order after Blakely demonstrates the product in person.'},{y:'2000',e:'QVC sells about 8,000 pairs in six minutes (reported).'},{y:'2012',e:'Forbes names her the youngest self-made female billionaire.'},{y:'2021',e:'Blackstone acquires a majority stake at a $1.2 billion valuation.'}],
+ struggles:['Mill owners told her no, repeatedly, before one agreed.','No retail contacts, no industry experience, no outside capital.','Packing and shipping early orders herself.'],
+ decision:{h:'Show the product on a body, in the room.',p:'Blakely did not pitch buyers on a concept. She showed them the before and after in person. One yes from a major retailer made the next yes easier. She also chose not to bring in investors, funding growth from sales and keeping every decision about design, packaging and distribution in her own hands.'},
+ metrics:[{v:'$5,000',l:'Starting savings'},{v:'8,000',l:'Pairs sold in six minutes on QVC (reported)'},{v:'~$4M',l:'First-year sales (reported)'},{v:'$1.2B',l:'Valuation at the 2021 Blackstone deal'}],
+ lessons:['Demonstrate the result. A demo beats a deck.','Distribution is a product problem. One retailer’s yes unlocked others.','Full ownership left every call with the founder.'],
+ steal:'Write a one-minute demo of your product that needs no slides, and give it live this week.'},
+{id:'dyson',name:'James Dyson',co:'Dyson',years:'1978 to 1993',tags:['Bootstrapped','Hardware'],
+ line:'5,127 prototypes, a family living on a teacher’s salary, and a vacuum that finally launched in Japan before Britain.',
+ setup:'In 1978 Dyson noticed his vacuum cleaner lost suction as the bag clogged. He had seen a cyclone separator at a sawmill and wondered whether the same idea could clean the air in a house.',
+ timeline:[{y:'1978',e:'Idea for a bagless cleaner built on cyclone separation.'},{y:'1979 to 1984',e:'5,127 prototypes. His wife Deirdre’s income as an art teacher supports the family.'},{y:'1984',e:'Established manufacturers decline to license it. Bag sales were profitable for them.'},{y:'1986',e:'A Japanese company launches it as the G-Force at about $2,000.'},{y:'1991',e:'The G-Force wins a design prize in Japan.'},{y:'1993',e:'Dyson builds its own factory and launches the DC01 in the UK.'}],
+ struggles:['Five years of failed prototypes before one worked.','The incumbents had no reason to kill a profitable consumables business.','Funding the work with loans and household income.'],
+ decision:{h:'Take it to the market that valued the difference.',p:'When no UK or US company would license the product, Dyson took it to Japan, where it launched as a design object at a premium price. That revenue and credibility funded the next stage. He then built his own company, rather than licensing again, and sold under his own name.'},
+ metrics:[{v:'5,127',l:'Prototypes built over about five years'},{v:'~15 years',l:'First idea to own-brand launch'},{v:'~$2,000',l:'G-Force price in Japan'},{v:'~2 years',l:'DC01 to UK best-seller (reported)'}],
+ lessons:['Hardware moves at the speed of prototypes. Build the cheapest next one.','If incumbents will not license it, find a market that pays for the difference.','Premium pricing can fund development.'],
+ steal:'Count your prototypes. If the number is under ten, you are still guessing.'},
+{id:'shopify',name:'Tobi Lütke',co:'Shopify',years:'2004 to 2015',tags:['Venture-Backed','E-commerce','Pivot'],
+ line:'A snowboard shop whose founder wrote his own store software because nothing on the market worked.',
+ setup:'Lütke, a programmer who had moved from Germany to Ottawa, wanted to sell snowboards online. None of the e-commerce software he tried was good enough, so he wrote his own on Ruby on Rails, with partners Daniel Weinand and Scott Lake.',
+ timeline:[{y:'2004',e:'Snowdevil, an online snowboard store, goes live on custom software.'},{y:'2005',e:'Other merchants ask to use the platform behind the store.'},{y:'2006',e:'Shopify launches as a product in its own right.'},{y:'2009',e:'App store and API open to outside developers.'},{y:'2010',e:'First outside funding round, reported around $7 million.'},{y:'2015',e:'IPO on the NYSE and TSX with about 165,000 merchants (reported).'}],
+ struggles:['The store sold few boards. The software drew all the interest.','Entrenched platforms and agencies already served merchants.','A small team could not build every feature merchants wanted.'],
+ decision:{h:'Sell the software, not the snowboards.',p:'The founders had to choose between running a shop and serving other shops. They put the store aside and pointed the company at other merchants. In 2009 they opened an API and an app store so partners could build features the small team never could.'},
+ metrics:[{v:'2 years',l:'Snowboard store to Shopify launch'},{v:'~165k',l:'Merchants at the 2015 IPO (reported)'},{v:'2009',l:'App store and API open to developers'},{v:'2015',l:'IPO on NYSE and TSX'}],
+ lessons:['Your internal tool may be the real product.','A platform scales by letting others build.','Frustration with your own tools is market research.'],
+ steal:'List three tools you built or hacked together for yourself. Ask who else has that problem.'},
+{id:'zerodha',name:'Nithin Kamath',co:'Zerodha',years:'2010 to today',tags:['Bootstrapped','Fintech'],
+ line:'A trader who found brokerage fees absurd started an Indian brokerage on flat fees and never took outside money.',
+ setup:'Kamath, a trader, saw that brokers charged a percentage of every trade, however large. In 2010 he and his brother Nikhil started Zerodha in Bengaluru with a different price: a small flat fee.',
+ timeline:[{y:'2010',e:'Launch with flat-fee brokerage.'},{y:'2014',e:'Varsity, a free educational site for new investors.'},{y:'2015',e:'Zero brokerage on equity delivery trades.'},{y:'2020',e:'Reported to be India’s largest broker by active clients.'},{y:'FY24',e:'Profit of about ₹4,700 crore, reported, with no external funding.'}],
+ struggles:['Competing with bank-backed brokers that had branch networks.','No paid advertising. Growth came from traders telling other traders.','A broker carries compliance, margin and technology obligations from day one.'],
+ decision:{h:'Earn less per trade. Spend on technology and teaching.',p:'Flat pricing meant earning less from large traders from the first day. Kamath kept fees low and put money into technology and free education instead of advertising, accepting slow early growth. Over a decade, low cost and trust compounded.'},
+ metrics:[{v:'₹20',l:'Flat fee per order on intraday and F&O trades'},{v:'₹0',l:'Brokerage on equity delivery trades'},{v:'₹0',l:'Outside capital raised'},{v:'~₹4,700 cr',l:'Profit in FY24 (reported)'}],
+ lessons:['Price can be the product.','Teach your market. Trust does the work of advertising.','Profit keeps you independent.'],
+ steal:'Write your pricing as one sentence a customer could repeat to a friend.'},
+{id:'levels',name:'Pieter Levels',co:'Nomad List and others',years:'2014 to today',tags:['Bootstrapped','Solo Founder','SaaS'],
+ line:'A developer set himself twelve launches in twelve months, then kept the few that earned money and ran them alone.',
+ setup:'In 2014 Levels, a Dutch developer working remotely, challenged himself to launch twelve products in twelve months, alone and in public. Most earned nothing. A few did.',
+ timeline:[{y:'2014',e:'The twelve-in-twelve challenge begins. Nomad List, a ranked guide to cities for remote workers, gains traction.'},{y:'2014 to 2016',e:'Nomad List becomes a paid membership. Remote OK, a remote jobs board, follows.'},{y:'2022 onward',e:'Photo AI and other AI products, all built and run solo.'}],
+ struggles:['Most of the twelve projects earned little or nothing.','Support, code and marketing all land on one person.','Revenue and failures are shared publicly, so mistakes are visible.'],
+ decision:{h:'Ship small, then back the winners.',p:'Instead of perfecting one idea, Levels shipped quickly and let usage choose. When a product showed paying demand he concentrated his time there. Working in public brought free attention, and it kept him honest about what was working.'},
+ metrics:[{v:'12 in 12',l:'Products attempted in the 2014 challenge'},{v:'0',l:'Employees (publicly stated)'},{v:'$0',l:'Outside funding raised'},{v:'7 figures',l:'Annual revenue across products (self-reported)'}],
+ lessons:['Shipping is the cheapest validation.','Going solo works when the product is small and the audience is reachable.','Public numbers build trust and bring leads.'],
+ steal:'Pick a product you could ship in a weekend. Ship it by Sunday.'}
+];
+
+var FILTERS=['All','Bootstrapped','Venture-Backed','Solo Founder','SaaS','E-commerce','Hardware','Marketplace','Fintech','Consumer product','Pivot'];
+
+var CATS=[
+{id:'finance',name:'Finance & Runway',intro:'Finance for a founder is arithmetic and honesty: how long you can last, what a customer is worth, and when the cash actually arrives.',pairs:[
+ {topic:'Tracking cash',dont:'Check the bank balance when you remember, and relax if the number is big.',do:'Track runway in months at net burn, and update it on the first of every month.',why:'A balance means little without the rate it is falling at. Months of runway is the number that decides your options.',tryIt:'Open the Cash Runway calculator and enter this month’s real numbers.'},
+ {topic:'Pricing',dont:'Pick a low price to avoid rejection, or add a margin on top of cost.',do:'Price against the value to the customer and test two prices with real prospects.',why:'If nobody ever pushes back on your price, it is too low. A price that is too low also hides whether the product is valuable.',tryIt:'Ask five customers what price would feel so cheap they would doubt it, and what price would be too much.'},
+ {topic:'Spending',dont:'Buy the office, the brand and the tools first, because it feels like progress.',do:'Spend only on things that shorten the time to the next piece of evidence.',why:'Early money buys learning. Anything that does not speed up learning can wait.',tryIt:'Cancel three subscriptions you did not use this month.'},
+ {topic:'Revenue versus cash',dont:'Count invoiced revenue as cash and plan hiring around it.',do:'Track cash collected, what you are owed, and what you owe over the next 13 weeks.',why:'Companies with growing revenue still run out of cash when customers pay in 60 days and suppliers want 30.',tryIt:'Build a 13-week cash forecast with one row per week and three columns: in, out, balance.'}]},
+{id:'sales',name:'Sales & Outreach',intro:'Sales decides the first year. You do it yourself, by hand, before anyone else can do it for you.',pairs:[
+ {topic:'Customer conversations',dont:'Pitch your idea and ask whether people like it.',do:'Ask about the last time the problem happened and what they did about it.',why:'Opinions about the future are polite fiction. Descriptions of the past are evidence.',tryIt:'Rewrite your interview opening so the first question never mentions your product.'},
+ {topic:'Outreach',dont:'Send 500 generic emails and judge the market by the reply rate.',do:'Send 20 researched messages a week, each with one specific reason and one clear ask.',why:'Volume hides a weak message. Twenty personal messages teach you more than five hundred ignored ones.',tryIt:'Write this week’s 20 messages. Each must name something specific about the recipient.'},
+ {topic:'Follow-up',dont:'Send one email, get no reply, and decide they are not interested.',do:'Follow up four times over three weeks, each time adding something new.',why:'Silence usually means busy. Many replies arrive after the second or third message.',tryIt:'Draft a four-message sequence where each message adds one new fact or example.'},
+ {topic:'Closing',dont:'End the call with “Let me know what you think.”',do:'Ask for a decision and a date: “Do you want to start on the first of the month?”',why:'A clear ask turns a vague maybe into a yes, or into the real objection you need to hear.',tryIt:'On your next call, make a specific ask in the last two minutes and write the answer down word for word.'}]},
+{id:'product',name:'Product Design',intro:'Early product design is mostly deciding what not to build, and learning faster than you build.',pairs:[
+ {topic:'Validating early versus building in secret',dont:'Build for six months, then launch to find out whether anyone wants it.',do:'Put something rough in front of real users in the first two weeks and watch what they do.',why:'Every month in secret multiplies the cost of being wrong. A rough prototype someone uses teaches you more than a polished one nobody has seen.',tryIt:'Show a clickable mock-up or a hand-drawn flow to three target users this week.'},
+ {topic:'Scope',dont:'List every feature and build them in the order you find exciting.',do:'Pick one job the customer needs done and build the shortest path to finishing it.',why:'Customers do not buy features. They hire a product to do a job.',tryIt:'Write the job in one line: “Help [who] do [what] in [time].” Delete anything on your list that does not serve it.'},
+ {topic:'Feedback',dont:'Ask “Do you like it?” and treat compliments as progress.',do:'Watch five people try to use it, in silence, and note where they stop.',why:'People are polite to founders. Their hesitation is honest.',tryIt:'Run five 20-minute sessions where the only thing you say is “What would you do next?”'},
+ {topic:'Polish',dont:'Spend a week on pixel details before anyone has completed the main task.',do:'Measure time to first value and shorten it before improving anything else.',why:'A beautiful product that people abandon at step three is still a failure.',tryIt:'Time how long a new user takes to get their first result. Write it down. Cut one step.'}]},
+{id:'people',name:'Hiring & Mindset',intro:'Who you work with, how you decide, and how you keep going without fooling yourself.',pairs:[
+ {topic:'First hires',dont:'Hire early to feel like a real company and to share the load.',do:'Hire when a repeating task blocks revenue, starting with a paid trial project.',why:'Each early hire is a fixed cost and a person to manage. A trial project shows how someone works before you commit.',tryIt:'List the three tasks that eat your week. Pick one a contractor could do for a fixed fee.'},
+ {topic:'Co-founders',dont:'Pick a close friend and split equity 50-50 on day one.',do:'Work together on a small paid project for four to eight weeks before you split equity.',why:'Compatibility shows under pressure, not at dinner. Vesting protects both of you if it does not work out.',tryIt:'Agree a four-week trial with a defined deliverable before any equity conversation.'},
+ {topic:'Judging yourself',dont:'Judge each decision by how it turned out.',do:'Keep a decision log and judge the reasoning at the time, separately from the result.',why:'Good decisions sometimes lose and bad ones sometimes win. Without a log you learn the wrong lessons from luck.',tryIt:'Write down your last big decision, what you knew and what you expected. Review it in 30 days.'},
+ {topic:'Advice',dont:'Collect opinions from everyone who offers and average them.',do:'Pick three advisors who have done the specific thing and ask each a specific question.',why:'General advice is plentiful and contradictory. Specific advice from someone who has done it is rare.',tryIt:'Write one question you are stuck on and send it to someone who has solved it.'}]}
+];
+
+var DECK=[
+{name:'Company in one line',job:'Let a stranger repeat what you do in a sentence.',qs:['What do you make, and for whom?','What changes for them after they use it?'],avoid:'Mission statements and buzzwords such as “AI-powered platform”.',exH:'Ledgerline closes the books for small agencies in one day.',exB:'Today it takes nine days\n40 agencies on the waitlist\nFounders: an ex-agency controller and a payments engineer'},
+{name:'Problem',job:'Make the investor feel the pain in the customer’s own words.',qs:['Who has it, and how often?','What does it cost in hours or money?','What do they do today?'],avoid:'A market-size slide dressed up as a problem, or a problem only you believe exists.',exH:'Small agencies lose nine days a month to closing the books.',exB:'Finance runs on spreadsheets and email threads\nErrors surface after clients are billed\n14 of 15 owners interviewed do it themselves at night'},
+{name:'Solution',job:'Show the after, and why it is ten times better, not ten percent.',qs:['What does the customer do differently?','What is the one detail competitors cannot copy quickly?'],avoid:'Feature lists and roadmaps.',exH:'One inbox in, a closed month out.',exB:'Connects bank, invoicing and payroll\nFlags mismatches before clients see them\nPilot customers close in 1.5 days on average'},
+{name:'Traction',job:'Prove that somebody already wants it.',qs:['What are revenue, users, pilots and growth rate?','What changed in the last 90 days?'],avoid:'Vanity metrics, or “interest” without commitments.',exH:'11 paying agencies in 10 weeks.',exB:'Monthly revenue $6.2k, growing 18% a month\nWeek-8 retention: 10 of 11 customers\nOne channel: founder-led outbound, three calls per close'},
+{name:'Why now',job:'Name the change that makes this possible this year.',qs:['What changed in technology, regulation or behaviour?','Why could this not be built five years ago?'],avoid:'“The market is huge and growing.”',exH:'Open banking APIs made reconciliation automatic.',exB:'Bank feeds now cover most agency accounts\nClients expect real-time invoicing\nIncumbents are built for 500-person firms'},
+{name:'Market and competition',job:'Show a market you can win a first slice of, and name who else is there.',qs:['What is the bottom-up count: customers times price?','Who is the beachhead?','What do customers use instead, including spreadsheets?'],avoid:'“If we get 1% of the market”, and claiming you have no competitors.',exH:'120,000 agencies in our first country, at $4,000 a year.',exB:'Bottom-up: 120k × $4k ≈ $480M\nStart with design and marketing agencies of 5 to 50 people\nAlternatives: spreadsheets, freelance bookkeepers, two legacy tools'},
+{name:'Business model',job:'Explain how money flows and why each customer is worth winning.',qs:['What are price, gross margin, acquisition cost, payback and churn?'],avoid:'“We will figure out monetisation later.”',exH:'$330 a month, 80% gross margin, seven-month payback.',exB:'Priced per agency, not per seat\nAcquisition cost $1,900 through outbound\nLTV:CAC about 4 at 3.5% monthly churn'},
+{name:'Go-to-market',job:'Show a repeatable way to find the next 100 customers.',qs:['Which channel, and what does it cost?','What have you learned from running it?'],avoid:'“Viral growth” or “content marketing” with no numbers behind them.',exH:'Outbound to agency owners converts one demo in three.',exB:'Founder-led: 40 messages a week, 12 calls, 4 pilots\nPartner channel: two accounting firms refer clients\nNext: first sales hire once five closes a month repeat'},
+{name:'Team',job:'Explain why these people will win this.',qs:['What makes this team unusually suited to the problem?','Who is missing, and when will you hire them?'],avoid:'Résumé dumps, and advisors listed only for their names.',exH:'A controller and an engineer who have lived this problem.',exB:'Priya: ran finance at a 40-person agency for eight years\nJames: built payments reconciliation at a fintech\nHiring: head of sales after the seed round'},
+{name:'The ask',job:'State how much, for what, and what it will prove by when.',qs:['How much are you raising?','How many months of runway does it buy?','Which milestones will it reach?'],avoid:'Asking without a plan, or naming a range.',exH:'Raising $1.2M to reach $50k monthly revenue in 18 months.',exB:'Runway of 20 months at planned burn\n55% hiring, 25% growth, 20% buffer\nMilestone: repeatable outbound across 150 agencies'}
+];
+
+/* ---------- STATE ---------- */
+var KEY='founders-compass:v1';
+var TABS=['roadmap','journeys','curriculum','toolkit'];
+var SUBS=['runway','burn','cac','deck'];
+function defaults(){
+  var slides=[];for(var i=0;i<10;i++)slides.push({h:'',b:''});
+  return {tab:'roadmap',stage:1,checks:{},notes:{},read:{},filter:'All',caseId:'mailchimp',cat:'finance',curr:{},sub:'runway',cur:'$',theme:'dark',
+    runway:{cash:180000,rev:12000,exp:34000,g:8,eg:3},
+    burn:{payroll:21000,contractors:3500,software:2400,marketing:5200,rent:1200,other:700,rev:12000,nnmrr:1500},
+    cac:{arpa:330,gm:80,churn:3.5,spend:7600,newc:4},
+    deck:{cur:0,slides:slides}};
+}
+function merge(a,b){
+  if(!b||typeof b!=='object')return a;
+  Object.keys(a).forEach(function(k){
+    if(!(k in b))return;
+    if(a[k]&&typeof a[k]==='object'&&!Array.isArray(a[k])){a[k]=merge(a[k],b[k]);}
+    else a[k]=b[k];
+  });
+  return a;
+}
+var S=load();
+function load(){
+  var d=defaults();
+  try{var raw=localStorage.getItem(KEY);if(raw)d=merge(d,JSON.parse(raw));}catch(e){}
+  if(!Array.isArray(d.deck.slides))d.deck.slides=defaults().deck.slides;
+  while(d.deck.slides.length<10)d.deck.slides.push({h:'',b:''});
+  d.deck.slides=d.deck.slides.slice(0,10).map(function(s){return {h:String((s&&s.h)||''),b:String((s&&s.b)||'')};});
+  return d;
+}
+var saveT=null;
+function save(){clearTimeout(saveT);saveT=setTimeout(function(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}},200);}
+
+/* ---------- HELPERS ---------- */
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function polar(cx,cy,r,deg){var a=deg*Math.PI/180;return [cx+r*Math.sin(a),cy-r*Math.cos(a)];}
+function arcPath(r,a0,a1){var p0=polar(180,180,r,a0),p1=polar(180,180,r,a1);return 'M'+p0[0].toFixed(2)+' '+p0[1].toFixed(2)+' A'+r+' '+r+' 0 '+((a1-a0)>180?1:0)+' 1 '+p1[0].toFixed(2)+' '+p1[1].toFixed(2);}
+var LOC={'$':'en-US','₹':'en-IN','€':'en-IE','£':'en-GB'};
+function num(n){return Math.abs(Math.round(n)).toLocaleString(LOC[S.cur]||'en-US');}
+function money(n){if(!isFinite(n))return '—';return (n<0?'-':'')+S.cur+num(n);}
+function compact(n){var a=Math.abs(n),s=n<0?'-':'';function f(v,u){return s+(v.toFixed(1).replace(/\.0$/,''))+u;}
+  if(a>=1e9)return f(a/1e9,'B');if(a>=1e6)return f(a/1e6,'M');if(a>=1e3)return f(a/1e3,'K');return s+Math.round(a);}
+function fmtM(m){return (m>=10?Math.round(m):m.toFixed(1))+' months';}
+function addMonths(m){var d=new Date();d.setMonth(d.getMonth()+Math.round(m));return d.toLocaleDateString('en-GB',{month:'short',year:'numeric'});}
+function toast(msg){var t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(function(){t.hidden=true;},2600);}
+function setPath(o,path,v){var ks=path.split('.');for(var i=0;i<ks.length-1;i++)o=o[ks[i]];o[ks[ks.length-1]]=v;}
+function reduced(){return window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}
+
+/* ---------- PROGRESS ---------- */
+function stageStats(i){var st=STAGES[i],done=0;for(var k=0;k<st.items.length;k++){if(S.checks[st.id+'.'+k])done++;}return {done:done,total:st.items.length,pct:done/st.items.length};}
+function overall(){var d=0,t=0;for(var i=0;i<STAGES.length;i++){var s=stageStats(i);d+=s.done;t+=s.total;}return {done:d,total:t,pct:t?d/t:0};}
+function nextMove(){for(var i=0;i<STAGES.length;i++){for(var k=0;k<STAGES[i].items.length;k++){if(!S.checks[STAGES[i].id+'.'+k])return {st:STAGES[i],k:k};}}return null;}
+function currCount(cid){var c=CATS.filter(function(x){return x.id===cid;})[0],d=0;c.pairs.forEach(function(_,i){if(S.curr[cid+'.'+i])d++;});return {done:d,total:c.pairs.length};}
+
+function buildDial(){
+  var svg='<svg viewBox="0 0 360 360" role="img" aria-label="Compass showing roadmap progress"><title>Roadmap progress compass</title>';
+  for(var d=0;d<360;d+=5){var lg=d%30===0,a=polar(180,180,148,d),b=polar(180,180,lg?163:155,d);
+    svg+='<line class="tick'+(lg?' long':'')+'" x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'"/>';}
+  for(var i=0;i<5;i++){
+    svg+='<path class="track" d="'+arcPath(126,i*72+4,(i+1)*72-4)+'"/><path class="fill" id="dialFill'+i+'" d=""/>';
+    var np=polar(180,180,102,i*72+36);
+    svg+='<text class="num" x="'+np[0].toFixed(1)+'" y="'+np[1].toFixed(1)+'" text-anchor="middle" dominant-baseline="central">'+(i+1)+'</text>';
+  }
+  svg+='<text class="north" x="180" y="7" text-anchor="middle" dominant-baseline="central">N</text>';
+  svg+='<g id="needle"><polygon points="180,58 188,180 172,180" fill="var(--accent)"/><polygon points="180,290 186,180 174,180" fill="var(--fg-3)"/></g>';
+  svg+='<circle cx="180" cy="180" r="7" fill="var(--bg)" stroke="var(--fg)" stroke-width="1.5"/></svg>';
+  svg+='<div class="readout"><span>BEARING</span><b id="bearing">000°</b><span id="pctTxt">0% of the way to launch</span></div>';
+  $('#dial').innerHTML=svg;
+}
+
+function refreshProgress(){
+  var o=overall(),deg=Math.round(o.pct*360);
+  for(var i=0;i<5;i++){
+    var s=stageStats(i),f=$('#dialFill'+i);
+    if(f)f.setAttribute('d',s.pct>0?arcPath(126,i*72+4,i*72+4+64*s.pct):'');
+    var card=$('.sc[data-stage-pick="'+STAGES[i].id+'"]');
+    if(card){$('.bar-track i',card).style.width=(s.pct*100)+'%';$('.sc-count',card).textContent=s.done+'/'+s.total;}
+  }
+  var nd=$('#needle');if(nd)nd.style.transform='rotate('+deg+'deg)';
+  var b=$('#bearing');if(b)b.textContent=('00'+deg).slice(-3)+'°';
+  var pt=$('#pctTxt');if(pt)pt.textContent=Math.round(o.pct*100)+'% of the way to launch';
+  $('#miniPct').textContent=Math.round(o.pct*100)+'%';
+  // next move
+  var nm=nextMove(),box=$('#nextMove');
+  if(nm){box.innerHTML='<div style="min-width:0;flex:1 1 240px"><p class="lab">Your next move</p><p><b>Stage '+nm.st.id+'.</b> '+esc(nm.st.items[nm.k].t)+'</p></div><button class="btn pri" data-act="next-move">Open it</button>';}
+  else{box.innerHTML='<div style="min-width:0;flex:1 1 240px"><p class="lab">All five gates passed</p><p>Check your numbers in the toolkit, then launch.</p></div><button class="btn pri" data-go="toolkit">Open toolkit</button>';}
+  // stage detail
+  var st=STAGES[S.stage-1],ss=stageStats(S.stage-1),sp=$('#sdBar');
+  if(sp){sp.style.width=(ss.pct*100)+'%';$('#sdCount').textContent=ss.done+' of '+ss.total+' done';
+    var gs=$('#gateState');if(gs){var left=ss.total-ss.done;gs.className='gate-state'+(left===0?' pass':'');gs.textContent=left===0?'Gate passed. Move on to the next stage.':'Gate open. '+left+(left===1?' item':' items')+' to go.';}}
+  // curriculum counts
+  CATS.forEach(function(c){var el=$('[data-cat-count="'+c.id+'"]');if(el){var k=currCount(c.id);el.textContent=k.done+'/'+k.total;}
+    var bar=$('[data-cat-bar="'+c.id+'"]');if(bar){var kk=currCount(c.id);bar.style.width=(kk.done/kk.total*100)+'%';}});
+  var rc=$('#readCount');if(rc){rc.textContent=Object.keys(S.read).filter(function(k){return S.read[k];}).length+' of '+CASES.length+' read';}
+  // deck counts
+  var dc=$('#deckCount');if(dc){dc.textContent=deckFilled()+' of 10 slides drafted';}
+}
+
+/* ---------- ROADMAP ---------- */
+function renderRoadmap(){
+  var cards=STAGES.map(function(st){
+    return '<button class="sc" data-stage-pick="'+st.id+'" aria-pressed="'+(S.stage===st.id)+'"><span class="m"><span>Stage '+st.id+'</span><span class="sc-count">0/0</span></span><span class="t">'+esc(st.short)+'</span><span class="bar-track"><i></i></span></button>';
+  }).join('');
+  $('#panel-roadmap').innerHTML='<div class="phead"><div><p class="eyebrow">Roadmap</p></div><div><h2>Five stages, in order.</h2><p class="intro">Each stage ends with a gate. Pass it before you spend money on the next one. Tick items as you finish them and write down what you learn.</p></div></div><div class="stages">'+cards+'</div><div id="stageDetail"></div>';
+  renderStage();
+}
+function renderStage(){
+  var st=STAGES[S.stage-1],items=st.items.map(function(it,k){
+    var key=st.id+'.'+k;
+    return '<li class="chk" id="row-'+st.id+'-'+k+'"><input type="checkbox" id="chk-'+st.id+'-'+k+'" data-check="'+key+'"'+(S.checks[key]?' checked':'')+'><label for="chk-'+st.id+'-'+k+'"><span class="chk-t">'+esc(it.t)+'</span><span class="chk-d">'+esc(it.d)+'</span><span class="chk-w"><i>Done when</i>'+esc(it.w)+'</span></label></li>';
+  }).join('');
+  var prev=STAGES[S.stage-2],next=STAGES[S.stage];
+  $('#stageDetail').innerHTML='<article class="sd"><div class="sd-side"><p class="eyebrow">Stage '+st.id+' · '+esc(st.weeks)+'</p><h3>'+esc(st.name)+'</h3><p class="q">'+esc(st.question)+'</p><p class="prose">'+esc(st.essay)+'</p><div class="gate"><p class="lab">Exit gate</p><p class="g">'+esc(st.gate)+'</p><p class="gate-state" id="gateState"></p></div><div class="note"><label for="stageNote">What I learned at this stage</label><textarea id="stageNote" placeholder="Objections you heard, numbers you found, what surprised you."></textarea></div></div><div class="sd-main"><div class="sd-prog"><div class="bar-track big"><i id="sdBar"></i></div><span id="sdCount"></span></div><ul class="checks">'+items+'</ul><div class="sd-nav">'+(prev?'<button class="btn" data-stage-nav="-1">← Stage '+prev.id+': '+esc(prev.short)+'</button>':'<span></span>')+(next?'<button class="btn pri" data-stage-nav="1">Stage '+next.id+': '+esc(next.short)+' →</button>':'')+'</div></div></article>';
+  $('#stageNote').value=S.notes[st.id]||'';
+  $$('.sc').forEach(function(c){c.setAttribute('aria-pressed',String(+c.getAttribute('data-stage-pick')===S.stage));});
+  refreshProgress();
+}
+
+/* ---------- JOURNEYS ---------- */
+function renderJourneys(focusSel){
+  var count=function(t){return t==='All'?CASES.length:CASES.filter(function(c){return c.tags.indexOf(t)>-1;}).length;};
+  var list=CASES.filter(function(c){return S.filter==='All'||c.tags.indexOf(S.filter)>-1;});
+  if(!list.some(function(c){return c.id===S.caseId;}))S.caseId=list.length?list[0].id:CASES[0].id;
+  var c=CASES.filter(function(x){return x.id===S.caseId;})[0];
+  var chips=FILTERS.map(function(t){return '<button class="chip" data-filter="'+esc(t)+'" aria-pressed="'+(S.filter===t)+'">'+esc(t)+'<small>'+count(t)+'</small></button>';}).join('');
+  var items=list.map(function(x){return '<button class="jitem" data-case="'+x.id+'" aria-pressed="'+(x.id===S.caseId)+'"><span class="n">'+esc(x.co)+'</span><span class="c">'+esc(x.name)+'</span>'+(S.read[x.id]?'<span class="read">READ</span>':'')+'</button>';}).join('');
+  var dos='<article class="dos" id="dossier"><p class="eyebrow">Founder journey</p><h3 style="margin-top:10px">'+esc(c.co)+'</h3><p class="meta">'+esc(c.name)+' · '+esc(c.years)+'</p><div class="tags">'+c.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('')+'</div><p class="line">'+esc(c.line)+'</p>'
+   +'<div class="dsec"><p class="lab">The setup</p><p class="p">'+esc(c.setup)+'</p></div>'
+   +'<div class="dsec"><p class="lab">Timeline</p><ol class="tl">'+c.timeline.map(function(t){return '<li><span class="y">'+esc(t.y)+'</span><span>'+esc(t.e)+'</span></li>';}).join('')+'</ol></div>'
+   +'<div class="dsec"><p class="lab">Early struggles</p><ul class="ul">'+c.struggles.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></div>'
+   +'<div class="decision"><p class="lab">The decision under pressure</p><h4>'+esc(c.decision.h)+'</h4><p class="p">'+esc(c.decision.p)+'</p></div>'
+   +'<div class="dsec"><p class="lab">Key metrics</p><div class="metrics">'+c.metrics.map(function(m){return '<div class="metric"><b>'+esc(m.v)+'</b><span>'+esc(m.l)+'</span></div>';}).join('')+'</div></div>'
+   +'<div class="dsec"><p class="lab">Lessons</p><ul class="ul">'+c.lessons.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></div>'
+   +'<div class="steal"><p class="lab">Do this week</p><p class="p">'+esc(c.steal)+'</p></div>'
+   +'<label class="readbox"><input type="checkbox" data-read="'+c.id+'"'+(S.read[c.id]?' checked':'')+'> Mark as read</label></article>';
+  $('#panel-journeys').innerHTML='<div class="phead"><div><p class="eyebrow">Founder journeys</p><p class="eyebrow" id="readCount" style="margin-top:8px"></p></div><div><h2>Seven founders, what actually happened.</h2><p class="intro">Timelines, early struggles and the decision each founder made under pressure. Figures come from public reporting and interviews, are rounded, and are marked “reported” where they are not confirmed. Check primary sources before you quote them.</p></div></div><div class="chips">'+chips+'</div><div class="jl"><div class="jlist">'+items+'</div>'+dos+'</div>';
+  refreshProgress();
+  if(focusSel){var el=$(focusSel);if(el)el.focus();}
+}
+
+/* ---------- CURRICULUM ---------- */
+var ICON_X='<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2" fill="none"/></svg>';
+var ICON_OK='<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 7.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" fill="none"/></svg>';
+function renderCurriculum(focusSel){
+  var cat=CATS.filter(function(c){return c.id===S.cat;})[0];
+  var seg=CATS.map(function(c){return '<button data-cat="'+c.id+'" aria-pressed="'+(c.id===S.cat)+'">'+esc(c.name)+'<small data-cat-count="'+c.id+'"></small></button>';}).join('');
+  var pairs=cat.pairs.map(function(p,i){var key=cat.id+'.'+i;
+    return '<article class="pair"><h4>'+esc(p.topic)+'</h4><div class="vs"><div class="dont"><p class="k">'+ICON_X+'Don’t</p><p class="t">'+esc(p.dont)+'</p></div><div class="do"><p class="k">'+ICON_OK+'Do</p><p class="t">'+esc(p.do)+'</p></div></div><p class="why">'+esc(p.why)+'</p><label class="try"><input type="checkbox" data-curr="'+key+'"'+(S.curr[key]?' checked':'')+'><span><b>Try this week.</b> '+esc(p.tryIt)+'</span></label></article>';}).join('');
+  $('#panel-curriculum').innerHTML='<div class="phead"><div><p class="eyebrow">Curriculum</p></div><div><h2>What you must learn, and what to stop doing.</h2><p class="intro">Four capabilities, sixteen habits, each shown as what to stop and what to start. Tick the ones you have actually tried.</p></div></div><div class="seg">'+seg+'</div><div class="cat-h"><div><h3>'+esc(cat.name)+'</h3><p>'+esc(cat.intro)+'</p></div><div><div class="bar-track big"><i data-cat-bar="'+cat.id+'"></i></div></div></div>'+pairs;
+  refreshProgress();
+  if(focusSel){var el=$(focusSel);if(el)el.focus();}
+}
+
+/* ---------- TOOLKIT ---------- */
+function field(label,path,o){o=o||{};var id='f-'+path.replace(/\./g,'-');
+  return '<div class="field"><label for="'+id+'">'+label+'</label><div class="inp">'+(o.pre?'<span class="pre cur">'+S.cur+'</span>':'')+'<input type="number" id="'+id+'" data-path="'+path+'" inputmode="decimal" min="0" step="any">'+(o.suf?'<span class="suf">'+o.suf+'</span>':'')+'</div>'+(o.hint?'<p class="hint">'+o.hint+'</p>':'')+'</div>';}
+function renderToolkit(){
+  var seg=[['runway','Cash runway'],['burn','Burn rate'],['cac','CAC : LTV'],['deck','Pitch deck']].map(function(s){return '<button data-sub="'+s[0]+'" aria-pressed="'+(S.sub===s[0])+'">'+s[1]+'</button>';}).join('');
+  var curs=['$','₹','€','£'].map(function(c){return '<option value="'+c+'"'+(S.cur===c?' selected':'')+'>'+c+'</option>';}).join('');
+  var P=$('#panel-toolkit');
+  P.innerHTML='<div class="phead"><div><p class="eyebrow">Toolkit</p></div><div><h2>Do the arithmetic before you do the pitch.</h2><p class="intro">Three calculators and a ten-slide deck builder. Inputs start with example numbers. Replace them with yours. Everything you enter is saved in this browser.</p></div></div>'
+  +'<div class="tk-top"><div class="seg">'+seg+'</div><label class="cursel">Currency <select id="curSel">'+curs+'</select></label></div>'
+  +'<div id="sub-runway" class="calc" hidden><div><h3>Cash runway</h3><p class="sub">How long you last, and whether you are default alive: do you reach profit before the cash runs out?</p><p class="ex">Example values, replace with yours</p>'
+    +field('Cash in the bank','runway.cash',{pre:1})+field('Monthly revenue collected','runway.rev',{pre:1})+field('Monthly spending, all in','runway.exp',{pre:1,hint:'Payroll, tools, rent, ads, everything that leaves the account.'})+field('Revenue growth per month','runway.g',{suf:'%'})+field('Spending growth per month','runway.eg',{suf:'%'})+'</div>'
+    +'<div><div class="tiles" id="rwOut"></div><div id="rwVerdict"></div><div class="chart"><h5>Cash balance, month by month</h5><div id="rwChart"></div></div></div></div>'
+  +'<div id="sub-burn" class="calc" hidden><div><h3>Burn rate</h3><p class="sub">Gross burn is everything you spend. Net burn is what is left after revenue. The burn multiple compares net burn with the new recurring revenue it bought.</p><p class="ex">Example values, replace with yours</p>'
+    +field('Payroll and founder pay','burn.payroll',{pre:1})+field('Contractors','burn.contractors',{pre:1})+field('Software and infrastructure','burn.software',{pre:1})+field('Marketing and sales','burn.marketing',{pre:1})+field('Rent and office','burn.rent',{pre:1})+field('Everything else','burn.other',{pre:1})+field('Revenue collected this month','burn.rev',{pre:1})+field('Net new monthly recurring revenue','burn.nnmrr',{pre:1,hint:'New MRR added this month, minus any lost to churn.'})+'</div>'
+    +'<div><div class="tiles" id="bnOut"></div><div id="bnVerdict"></div><div class="bars" id="bnBars"></div></div></div>'
+  +'<div id="sub-cac" class="calc" hidden><div><h3>CAC : LTV</h3><p class="sub">What a customer costs to win against what they return. A common target is a ratio of 3 or more, with payback inside 12 months.</p><p class="ex">Example values, replace with yours</p>'
+    +field('Monthly revenue per customer','cac.arpa',{pre:1})+field('Gross margin','cac.gm',{suf:'%'})+field('Monthly churn','cac.churn',{suf:'%',hint:'Share of customers who leave each month.'})+field('Sales and marketing spend this month','cac.spend',{pre:1})+field('New customers this month','cac.newc',{})+'</div>'
+    +'<div><div class="tiles" id="cacOut"></div><div id="cacVerdict"></div><div class="tbl-wrap" id="cacLevers"></div></div></div>'
+  +'<div id="sub-deck" hidden></div>';
+  $$('[data-path]',P).forEach(function(i){var v=S;i.dataset.path.split('.').forEach(function(k){v=v[k];});i.value=v;});
+  buildDeck();
+  showSub(S.sub,true);
+}
+function showSub(name,silent){
+  S.sub=name;
+  SUBS.forEach(function(s){var el=$('#sub-'+s);if(el)el.hidden=(s!==name);});
+  $$('[data-sub]').forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-sub')===name));});
+  if(!silent)save();
+  recalc();
+}
+
+/* runway */
+function runwaySim(p){
+  var c=+p.cash||0,r=+p.rev||0,e=+p.exp||0,g=(+p.g||0)/100,eg=(+p.eg||0)/100,series=[c],dead=null,prof=null,m;
+  for(m=0;m<48;m++){
+    if(r>=e){prof=m;break;}
+    c+=r-e;series.push(c);
+    if(c<0){dead=m+1;break;}
+    r*=1+g;e*=1+eg;
+  }
+  var low=Math.min.apply(null,series.slice(0,prof!==null?prof+1:series.length));
+  if(prof!==null){for(var k=0;k<6;k++){c+=r-e;series.push(c);r*=1+g;e*=1+eg;}}
+  return {series:series,dead:dead,prof:prof,low:low};
+}
+function niceNum(x){var ex=Math.floor(Math.log(x)/Math.LN10),f=x/Math.pow(10,ex),nf=f<1.5?1:f<3?2:f<7?5:10;return nf*Math.pow(10,ex);}
+function niceTicks(lo,hi,n){var range=(hi-lo)||1,step=niceNum(range/n),t=[],v=Math.floor(lo/step)*step;while(v<=hi+step*0.001){t.push(v);v+=step;}return t;}
+function verdict(tone,head,text){return '<div class="verdict" data-tone="'+tone+'"><b>'+head+'</b> '+text+'</div>';}
+function tile(l,v,s){return '<div class="tile"><p class="l">'+l+'</p><b>'+v+'</b>'+(s?'<span>'+s+'</span>':'')+'</div>';}
+function calcRunway(){
+  var p=S.runway,net=(+p.exp||0)-(+p.rev||0),flat=net>0?(+p.cash||0)/net:Infinity,sim=runwaySim(p);
+  var out='';
+  out+=tile('Net burn per month',net>0?money(net):'+'+money(-net),net>0?'Spending minus revenue':'Surplus: revenue exceeds spending');
+  out+=tile('Runway at today’s burn',isFinite(flat)?fmtM(flat):'Unlimited',isFinite(flat)?'If nothing changes':'You are cash-flow positive');
+  out+=tile('Cash runs out',isFinite(flat)?addMonths(flat):'Not on this path',isFinite(flat)?'At today’s burn':'');
+  out+=tile('Break-even',sim.prof===0?'Now':sim.prof!==null?'Month '+sim.prof:'Not inside 4 years',sim.prof>0?'Around '+addMonths(sim.prof):'With your growth assumptions');
+  $('#rwOut').innerHTML=out;
+  var v;
+  if(sim.prof===0)v=verdict('good','Default alive.','Revenue already covers spending, so time is on your side.');
+  else if(sim.dead!==null)v=verdict('bad','Default dead.','At '+(+p.g||0)+'% revenue growth and '+(+p.eg||0)+'% spending growth, cash runs out in month '+sim.dead+' ('+addMonths(sim.dead)+') before revenue catches up. Cut spending, grow faster, or raise before then.');
+  else if(sim.prof!==null){var thin=sim.low<0.25*(+p.cash||1);v=verdict(thin?'warn':'good',thin?'Default alive, but thin.':'Default alive.','You reach break-even in month '+sim.prof+' with a low point of '+money(sim.low)+'. '+(thin?'A slow quarter could change that.':'Growth pays for itself on this path.'));}
+  else v=verdict('warn','No break-even inside four years.','You are not out of cash, but revenue does not catch spending on these assumptions. Test a higher growth rate or lower spending.');
+  $('#rwVerdict').innerHTML=v;
+  drawRunway(sim);
+}
+function drawRunway(sim){
+  var el=$('#rwChart');if(!el)return;
+  var W=Math.max(280,el.clientWidth||560),H=250,L=58,R=14,T=16,B=30,vals=sim.series,n=vals.length-1;
+  var lo=Math.min.apply(null,vals.concat([0])),hi=Math.max.apply(null,vals.concat([0]));if(hi===lo)hi=lo+1;
+  var ticks=niceTicks(lo,hi,4);lo=Math.min(lo,ticks[0]);hi=Math.max(hi,ticks[ticks.length-1]);
+  var x=function(i){return L+(W-L-R)*(n?i/n:0);},y=function(v){return T+(H-T-B)*(1-(v-lo)/(hi-lo));};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Line chart of projected cash balance by month">';
+  ticks.forEach(function(t){s+='<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(t).toFixed(1)+'" y2="'+y(t).toFixed(1)+'"/><text class="ax" x="'+(L-8)+'" y="'+(y(t)+4).toFixed(1)+'" text-anchor="end">'+S.cur+compact(t)+'</text>';});
+  s+='<line class="zero" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(0).toFixed(1)+'" y2="'+y(0).toFixed(1)+'"/>';
+  var step=n<=12?2:n<=24?4:n<=36?6:12;
+  for(var i=0;i<=n;i+=step){s+='<text class="ax" x="'+x(i).toFixed(1)+'" y="'+(H-10)+'" text-anchor="'+(i===0?'start':'middle')+'">'+(i===0?'now':i+'m')+'</text>';}
+  var pts=vals.map(function(v,i){return x(i).toFixed(1)+','+y(v).toFixed(1);});
+  s+='<path class="ar" d="M'+pts.join(' L')+' L'+x(n).toFixed(1)+','+y(0).toFixed(1)+' L'+x(0).toFixed(1)+','+y(0).toFixed(1)+' Z"/>';
+  s+='<path class="ln" d="M'+pts.join(' L')+'"/>';
+  function mark(i,cls,label){var px=x(i),end=px>W-100;s+='<line class="'+(cls==='bad'?'mk-bad':'mk-good')+'" x1="'+px.toFixed(1)+'" x2="'+px.toFixed(1)+'" y1="'+T+'" y2="'+(H-B)+'"/><text class="lb-'+cls+'" x="'+(px+(end?-6:6)).toFixed(1)+'" y="'+(T+10)+'" text-anchor="'+(end?'end':'start')+'">'+label+'</text>';}
+  if(sim.dead!==null)mark(sim.dead,'bad','Cash out, month '+sim.dead);
+  if(sim.prof!==null&&sim.prof>0)mark(sim.prof,'good','Break-even, month '+sim.prof);
+  s+='<circle class="dot" cx="'+x(n).toFixed(1)+'" cy="'+y(vals[n]).toFixed(1)+'" r="4"/></svg>';
+  el.innerHTML=s;
+}
+
+/* burn */
+var BURN_LINES=[['payroll','Payroll'],['contractors','Contractors'],['software','Software and infrastructure'],['marketing','Marketing and sales'],['rent','Rent and office'],['other','Everything else']];
+function calcBurn(){
+  var b=S.burn,gross=0;BURN_LINES.forEach(function(l){gross+=(+b[l[0]]||0);});
+  var rev=+b.rev||0,net=gross-rev,nn=(+b.nnmrr||0)*12,mult=(net>0&&nn>0)?net/nn:null;
+  $('#bnOut').innerHTML=tile('Gross burn',money(gross),'Total spending per month')+tile('Net burn',net>0?money(net):'+'+money(-net),net>0?'After revenue of '+money(rev):'Surplus per month')+tile('Burn multiple',mult!==null?mult.toFixed(1)+'×':'—','Net burn ÷ net new annual recurring revenue');
+  var v;
+  if(net<=0)v=verdict('good','Cash-flow positive.','You add '+money(-net)+' a month instead of burning it.');
+  else if(nn<=0)v=verdict('bad','Burning without adding recurring revenue.','You spend '+money(net)+' a month net and added nothing recurring. Find out which spending is producing growth.');
+  else if(mult<1)v=verdict('good','Excellent.','Under 1× means you buy new recurring revenue for less than a dollar of net burn per dollar.');
+  else if(mult<1.5)v=verdict('good','Great.','Between 1× and 1.5× is strong for an early company.');
+  else if(mult<2)v=verdict('good','Good.','Between 1.5× and 2× is acceptable. Watch the trend.');
+  else if(mult<3)v=verdict('warn','Suspect.','Between 2× and 3× means growth is expensive. Look at where the marketing and payroll money goes.');
+  else v=verdict('bad','Poor.','Above 3× means you spend far more than the growth you are getting. Cut or fix before you scale spend.');
+  $('#bnVerdict').innerHTML=v+'<p class="hint" style="margin-top:8px;color:var(--fg-3);font-size:.8rem">Benchmarks follow the burn multiple framework from David Sacks. Treat them as rough guides.</p>';
+  var rows=BURN_LINES.map(function(l){return {n:l[1],v:+b[l[0]]||0};}).sort(function(a,c){return c.v-a.v;});
+  $('#bnBars').innerHTML=rows.map(function(r){var pct=gross>0?r.v/gross*100:0;return '<div class="row"><span>'+esc(r.n)+'</span><div class="bar-track big"><i style="width:'+pct+'%"></i></div><span>'+Math.round(pct)+'%</span></div>';}).join('');
+}
+
+/* cac:ltv */
+function calcCac(){
+  var c=S.cac,arpa=+c.arpa||0,gm=(+c.gm||0)/100,ch=(+c.churn||0)/100,newc=+c.newc||0,spend=+c.spend||0;
+  var cac=newc>0?spend/newc:null,gp=arpa*gm,ltv=ch>0?gp/ch:null,ratio=(ltv!==null&&cac>0)?ltv/cac:null,pay=(cac!==null&&gp>0)?cac/gp:null,life=ch>0?1/ch:null;
+  $('#cacOut').innerHTML=tile('CAC',cac!==null?money(cac):'—','Spend ÷ new customers')+tile('LTV',ltv!==null?money(ltv):'—',life!==null?'Over about '+life.toFixed(0)+' months':'Needs a churn rate')+tile('LTV : CAC',ratio!==null?ratio.toFixed(1)+' : 1':'—','Target: 3 or more')+tile('Payback',pay!==null?fmtM(pay):'—','Months of gross profit to repay CAC');
+  var v;
+  if(ratio===null)v=verdict('warn','Fill in churn and new customers.','The ratio needs both a churn rate above zero and at least one new customer.');
+  else if(ratio<1)v=verdict('bad','You lose money on each customer.','A customer returns less than they cost to win. Fix pricing, churn or acquisition before spending more.');
+  else if(ratio<3)v=verdict('warn','Thin.','The economics work but with little margin for error. Aim for 3 or more.');
+  else if(ratio<5)v=verdict('good','Healthy.','Above 3 is a common benchmark. '+(pay!==null&&pay>12?'Payback is slow, so cash will be tight while you grow.':'Payback is inside a year, so growth can fund itself.'));
+  else v=verdict('good','Strong.','Above 5 can mean you are underinvesting in growth. Test spending more on the channel that works.');
+  $('#cacVerdict').innerHTML=v;
+  var rows=[];
+  if(ratio!==null){
+    var gm5=gm>0?ratio*(gm+0.05)/gm:ratio;
+    rows=[['Today',ratio],['Raise price 20%',ratio*1.2],['Cut churn by 20%',ratio/0.8],['Cut CAC by 20%',ratio/0.8],['Gross margin +5 points',gm5]];
+    $('#cacLevers').innerHTML='<table><thead><tr><th>Lever</th><th>New LTV : CAC</th><th>Change</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(1)+' : 1</td><td>'+(r[0]==='Today'?'—':'+'+(r[1]-ratio).toFixed(1))+'</td></tr>';}).join('')+'</tbody></table>';
+  }else $('#cacLevers').innerHTML='';
+}
+function recalc(){
+  if(!$('#sub-runway'))return;
+  if(S.sub==='runway')calcRunway();else if(S.sub==='burn')calcBurn();else if(S.sub==='cac')calcCac();
+}
+
+/* ---------- DECK ---------- */
+function deckFilled(){return S.deck.slides.filter(function(s){return s.h.trim()&&s.b.trim();}).length;}
+function wc(s){return (s.h+' '+s.b).trim().split(/\s+/).filter(Boolean).length;}
+function buildDeck(){
+  var strip=DECK.map(function(d,i){return '<button class="sl-btn" data-slide="'+i+'" aria-label="Slide '+(i+1)+': '+esc(d.name)+'" title="'+esc(d.name)+'">'+(i+1)+'</button>';}).join('');
+  $('#sub-deck').innerHTML='<h3 style="font-family:var(--f-display);font-weight:400;font-size:2rem;line-height:1.05">Pitch deck builder</h3><p style="font-family:var(--f-prose);color:var(--fg-2);font-size:1.04rem;margin:10px 0 22px;max-width:62ch">Ten slides, in the order investors expect them. Each slide gets one headline and up to three lines of proof, with a word budget so you cannot hide behind text.</p><div class="strip" role="group" aria-label="Slides">'+strip+'</div><div class="deck"><div class="guide" id="deckGuide"></div><div class="edit" id="deckEdit"></div></div>';
+  renderDeckSlide();
+}
+function previewHTML(i){
+  var s=S.deck.slides[i],lines=s.b.split('\n').map(function(x){return x.trim();}).filter(Boolean).slice(0,5);
+  return '<span class="sl-k">'+esc(DECK[i].name)+'</span><h5 class="sl-h">'+(s.h.trim()?esc(s.h):'<span class="ph">Your headline goes here</span>')+'</h5><ul>'+(lines.length?lines.map(function(l){return '<li>'+esc(l)+'</li>';}).join(''):'<li class="ph">Up to three short lines of proof</li>')+'</ul><span class="sl-n">'+(i+1)+' / 10</span>';
+}
+function outline(){
+  return '# Pitch deck outline\n\n'+DECK.map(function(d,i){var s=S.deck.slides[i],ls=s.b.split('\n').map(function(x){return x.trim();}).filter(Boolean);
+    return '## '+(i+1)+'. '+d.name+'\n'+(s.h.trim()||'(headline missing)')+(ls.length?'\n'+ls.map(function(l){return '- '+l;}).join('\n'):'');}).join('\n\n');
+}
+function renderDeckSlide(){
+  var i=S.deck.cur,d=DECK[i],s=S.deck.slides[i];
+  $('#deckGuide').innerHTML='<p class="lab">Slide '+(i+1)+' of 10</p><h3>'+esc(d.name)+'</h3><p class="job">'+esc(d.job)+'</p><h4>Answer these</h4><ul>'+d.qs.map(function(q){return '<li>'+esc(q)+'</li>';}).join('')+'</ul><h4>Avoid</h4><p class="a">'+esc(d.avoid)+'</p><details open><summary>Example from a fictional company, Ledgerline</summary><div class="exb"><b>'+esc(d.exH)+'</b><div>'+esc(d.exB)+'</div><button class="btn" data-act="use-example" id="useEx">Use as a starting point</button></div></details>';
+  $('#deckEdit').innerHTML='<label for="dk-h">Headline<span>One sentence a stranger could repeat</span></label><input type="text" id="dk-h" maxlength="120"><div style="height:14px"></div><label for="dk-b">Proof, one line each<span>Up to three lines</span></label><textarea id="dk-b" rows="4" style="min-height:104px"></textarea><div class="meter" id="dkMeter"><div class="bar-track"><i></i></div><span></span></div><div class="slide" id="dkPrev" aria-label="Slide preview"></div><div class="dk-actions"><button class="btn pri" data-act="copy-outline">Copy deck outline</button><button class="btn" data-act="clear-slide">Clear this slide</button><span class="mini" id="deckCount"></span></div><details class="outline"><summary>Outline as text</summary><textarea id="dkOutline" readonly aria-label="Deck outline text"></textarea></details>';
+  $('#dk-h').value=s.h;$('#dk-b').value=s.b;
+  updateDeckMeta();
+}
+function updateDeckMeta(){
+  var i=S.deck.cur,s=S.deck.slides[i];
+  $$('.sl-btn').forEach(function(b){var k=+b.getAttribute('data-slide'),sl=S.deck.slides[k];b.setAttribute('aria-pressed',String(k===i));b.classList.toggle('filled',!!(sl.h.trim()&&sl.b.trim()));});
+  var n=wc(s),over=n>45,m=$('#dkMeter');
+  if(m){m.classList.toggle('over',over);$('i',m).style.width=Math.min(100,n/45*100)+'%';$('span',m).textContent=over?(n-45)+' words over the 45 budget':n+' of 45 words';}
+  var pv=$('#dkPrev');if(pv)pv.innerHTML=previewHTML(i);
+  var ol=$('#dkOutline');if(ol)ol.value=outline();
+  var ue=$('#useEx');if(ue)ue.disabled=!!(s.h.trim()||s.b.trim());
+  var dc=$('#deckCount');if(dc)dc.textContent=deckFilled()+' of 10 slides drafted';
+}
+function copyText(txt){
+  function fallback(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}ta.remove();toast(ok?'Copied to clipboard':'Copy blocked here. Open “Outline as text” and copy from there.');}
+  try{navigator.clipboard.writeText(txt).then(function(){toast('Copied to clipboard');},fallback);}catch(e){fallback();}
+}
+
+/* ---------- NAVIGATION ---------- */
+function go(tab,opts){
+  opts=opts||{};
+  if(TABS.indexOf(tab)<0)tab='roadmap';
+  S.tab=tab;
+  $$('.tab').forEach(function(t){var on=t.getAttribute('data-tab')===tab;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;});
+  TABS.forEach(function(t){var p=$('#panel-'+t);p.hidden=(t!==tab);p.classList.remove('enter');});
+  var panel=$('#panel-'+tab);
+  if(!opts.silent){void panel.offsetWidth;panel.classList.add('enter');}
+  if(tab==='toolkit')recalc();
+  save();
+  if(!opts.silent){
+    var barH=$('#top').offsetHeight,top=$('#panels').getBoundingClientRect().top+window.pageYOffset-barH-8;
+    if(window.pageYOffset>top)window.scrollTo({top:top,behavior:reduced()?'auto':'smooth'});
+  }
+}
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',S.theme);
+  $('#themeBtn').textContent=S.theme==='dark'?'Light':'Dark';
+}
+function renderAll(){
+  applyTheme();buildDial();renderRoadmap();renderJourneys();renderCurriculum();renderToolkit();refreshProgress();
+}
+
+/* ---------- EVENTS ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-tab],[data-stage-pick],[data-stage-nav],[data-filter],[data-case],[data-cat],[data-sub],[data-slide],[data-act],[data-go]');
+  if(!t)return;
+  var ds=t.dataset;
+  if(ds.tab){go(ds.tab);return;}
+  if(ds.go){go(ds.go);return;}
+  if(ds.stagePick){S.stage=+ds.stagePick;save();renderStage();return;}
+  if(ds.stageNav){S.stage=Math.max(1,Math.min(5,S.stage+(+ds.stageNav)));save();renderStage();var sc=$('#stageDetail');window.scrollTo({top:sc.getBoundingClientRect().top+window.pageYOffset-$('#top').offsetHeight-80,behavior:reduced()?'auto':'smooth'});return;}
+  if(ds.filter){S.filter=ds.filter;save();renderJourneys('[data-filter="'+ds.filter+'"]');return;}
+  if(ds.case){S.caseId=ds.case;save();renderJourneys('[data-case="'+ds.case+'"]');if(window.matchMedia('(max-width:900px)').matches){var d=$('#dossier');if(d)window.scrollTo({top:d.getBoundingClientRect().top+window.pageYOffset-$('#top').offsetHeight-12,behavior:reduced()?'auto':'smooth'});}return;}
+  if(ds.cat){S.cat=ds.cat;save();renderCurriculum('[data-cat="'+ds.cat+'"]');return;}
+  if(ds.sub){showSub(ds.sub);return;}
+  if(ds.slide!==undefined){S.deck.cur=+ds.slide;save();renderDeckSlide();return;}
+  var a=ds.act;
+  if(a==='theme'){S.theme=S.theme==='dark'?'light':'dark';save();applyTheme();recalc();return;}
+  if(a==='next-move'){var nm=nextMove();if(!nm)return;S.stage=nm.st.id;go('roadmap',{silent:true});renderStage();var row=$('#row-'+nm.st.id+'-'+nm.k);if(row){row.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'center'});row.classList.remove('flash');void row.offsetWidth;row.classList.add('flash');var cb=$('input',row);if(cb)cb.focus({preventScroll:true});}return;}
+  if(a==='copy-outline'){copyText(outline());return;}
+  if(a==='clear-slide'){S.deck.slides[S.deck.cur]={h:'',b:''};save();renderDeckSlide();return;}
+  if(a==='use-example'){var i=S.deck.cur,sl=S.deck.slides[i];if(sl.h.trim()||sl.b.trim())return;sl.h=DECK[i].exH;sl.b=DECK[i].exB;save();renderDeckSlide();return;}
+  if(a==='reset'){
+    if(t.dataset.armed==='1'){try{localStorage.removeItem(KEY);}catch(x){}S=defaults();renderAll();go('roadmap');toast('Progress erased');t.dataset.armed='0';t.textContent='Erase all progress';return;}
+    t.dataset.armed='1';t.textContent='Click again to erase everything';
+    setTimeout(function(){t.dataset.armed='0';t.textContent='Erase all progress';},4000);return;
+  }
+});
+document.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.matches('[data-check]')){S.checks[t.dataset.check]=t.checked;save();refreshProgress();return;}
+  if(t.matches('[data-read]')){S.read[t.dataset.read]=t.checked;save();refreshProgress();var it=$('.jitem[data-case="'+t.dataset.read+'"]');if(it){var r=$('.read',it);if(t.checked&&!r){var s=document.createElement('span');s.className='read';s.textContent='READ';it.appendChild(s);}else if(!t.checked&&r){r.remove();}}return;}
+  if(t.matches('[data-curr]')){S.curr[t.dataset.curr]=t.checked;save();refreshProgress();return;}
+  if(t.id==='curSel'){S.cur=t.value;save();$$('.cur').forEach(function(c){c.textContent=S.cur;});recalc();return;}
+});
+document.addEventListener('input',function(e){
+  var t=e.target;
+  if(t.matches('[data-path]')){var v=parseFloat(t.value);setPath(S,t.dataset.path,isNaN(v)?0:v);save();recalc();return;}
+  if(t.id==='stageNote'){S.notes[S.stage]=t.value;save();return;}
+  if(t.id==='dk-h'){S.deck.slides[S.deck.cur].h=t.value;save();updateDeckMeta();refreshProgress();return;}
+  if(t.id==='dk-b'){S.deck.slides[S.deck.cur].b=t.value;save();updateDeckMeta();refreshProgress();return;}
+});
+document.addEventListener('keydown',function(e){
+  var t=e.target.closest&&e.target.closest('.tab');
+  if(!t||(e.key!=='ArrowRight'&&e.key!=='ArrowLeft'))return;
+  var i=TABS.indexOf(t.dataset.tab),n=TABS[(i+(e.key==='ArrowRight'?1:TABS.length-1))%TABS.length];
+  go(n);var nt=$('#tab-'+n);if(nt)nt.focus();e.preventDefault();
+});
+var rzT=null;
+window.addEventListener('resize',function(){
+  clearTimeout(rzT);rzT=setTimeout(function(){
+    document.documentElement.style.setProperty('--barh',$('#top').offsetHeight+'px');
+    if(S.tab==='toolkit'&&S.sub==='runway')recalc();
+  },120);
+});
+window.addEventListener('hashchange',function(){var h=location.hash.replace('#','');if(TABS.indexOf(h)>-1)go(h);});
+
+/* ---------- BOOT ---------- */
+var h0=location.hash.replace('#','');
+if(TABS.indexOf(h0)>-1)S.tab=h0;
+if(TABS.indexOf(S.tab)<0)S.tab='roadmap';
+if(SUBS.indexOf(S.sub)<0)S.sub='runway';
+if(S.stage<1||S.stage>5)S.stage=1;
+renderAll();
+document.documentElement.style.setProperty('--barh',$('#top').offsetHeight+'px');
+go(S.tab,{silent:true});
+})();
+</script>
+
+</body></html>
